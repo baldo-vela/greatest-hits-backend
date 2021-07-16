@@ -37,11 +37,11 @@ class Api::V1::UsersController < ApplicationController
       uri: user_params["uri"],
       spotify_id: user_params["id"])
       
-    image = user_params["images"][0] ? user_params["images"][0]["url"] : nil
+    image_url = user_params["images"][0] ? user_params["images"][0]["url"] : nil
     country = user_params["country"] ? user_params["country"] : nil
 
     #Update the user if they have image or country
-    @user.update(image: image, country: country)
+    @user.update(image_url: image_url, country: country)
 
     #Update the user access/refresh_tokens
     if @user.access_token_expired?
