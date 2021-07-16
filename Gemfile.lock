@@ -227,6 +227,7 @@ DEPENDENCIES
   puma (~> 5.0)
   rack-cors
   rails (~> 6.1.3, >= 6.1.3.2)
+  rest-client
   rspotify
   spring
   sqlite3 (~> 1.4)
