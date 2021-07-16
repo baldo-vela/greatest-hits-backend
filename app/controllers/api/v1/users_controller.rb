@@ -48,8 +48,8 @@ class Api::V1::UsersController < ApplicationController
       @user.refresh_access_token
     else
       @user.update(
-        access_token: auth_params["access_token"], 
-        refresh_token: auth_params["refresh_token"]
+        spotify_access_token: auth_params["access_token"], 
+        spotify_refresh_token: auth_params["refresh_token"]
       )
     end
 #Redirect to Front End app homepage
