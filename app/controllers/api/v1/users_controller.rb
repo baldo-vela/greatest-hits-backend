@@ -54,6 +54,12 @@ class Api::V1::UsersController < ApplicationController
         spotify_refresh_token: auth_params["refresh_token"]
       )
     end
+    # Checks if the userer instance is valid, passes complete user object to frontend
+    if @user
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
     #Redirect to Front End app homepage
     redirect_to "http://localhost:3000/main"
   end
