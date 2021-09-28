@@ -12,6 +12,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     # Request refresh and access tokens
+    #TODO: Refactor this to use a enviroment variable for the redirct_uri
     body = {
       grant_type: "authorization_code",
       code: params[:code],
