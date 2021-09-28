@@ -23,5 +23,6 @@ class Api::V1::AuthController < ApplicationController
         }
     #Sends the client to the Spotify API with the query params
     redirect_to "#{url}?#{query_params.to_query}"
+    #Spotify API will then redirect the client to the redirect_uri above
   end
 end
