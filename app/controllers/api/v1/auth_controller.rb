@@ -4,7 +4,7 @@ class Api::V1::AuthController < ApplicationController
         query_params = {
             client_id: Rails.application.credentials.spotify[:spotify_id],
             response_type: 'code',
-            redirect_uri: 'http://localhost:8000/api/v1/user',
+            redirect_uri: 'http://localhost:3001/api/v1/user',
             scope: "user-library-read 
                     playlist-read-collaborative
                     playlist-modify-private
