@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
     body = {
       grant_type: "authorization_code",
       code: params[:code],
-      redirect_uri: 'http://localhost:8000/api/v1/user',
+      redirect_uri: 'http://localhost:3001/api/v1/user',
       client_id: Rails.application.credentials.spotify[:spotify_id],
       client_secret: Rails.application.credentials.spotify[:spotify_secret]
     }
@@ -29,7 +29,8 @@ class Api::V1::UsersController < ApplicationController
     user_response = RestClient.get("https://api.spotify.com/v1/me", header)
     user_params = JSON.parse(user_response.body)
     
-    #Create User 
+    #Create User
+    # TODO: Split this into a helper method
     @user = User.find_or_create_by(
       name: user_params["display_name"], 
       spotify_url: user_params["external_urls"]["spotify"],
