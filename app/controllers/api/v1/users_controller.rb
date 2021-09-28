@@ -61,7 +61,7 @@ class Api::V1::UsersController < ApplicationController
       render json: @user.errors, status: :unprocessable_entity
     end
     #Redirect to Front End app homepage
-    redirect_to "http://localhost:3000/main"
+    # redirect_to "http://localhost:3000/main"
   end
 
   def update

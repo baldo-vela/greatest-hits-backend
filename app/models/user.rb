@@ -1,4 +1,20 @@
 require 'rest-client'
+# Example of User as instanced ActiveRecord object
+=begin 
+    <User id: 2, 
+    name: "foo", 
+    email: nil, 
+    href: "https://api.spotify.com/v1/users/foo", 
+    country: "US", 
+    spotify_url: "https://open.spotify.com/user/foo", 
+    spotify_id: "foo", 
+    spotify_access_token: [FILTERED], 
+    spotify_refresh_token: [FILTERED], 
+    uri: "spotify:user:foo", 
+    image_url: "https://i.scdn.co/image/foo...", 
+    created_at: "2021-09-21 20:27:27.652181000 +0000", 
+    updated_at: "2021-09-21 21:55:51.195515000 +0000"> 
+=end 
 
 class User < ApplicationRecord
     has_many :playlists
@@ -19,12 +35,16 @@ class User < ApplicationRecord
             }
             body = {
                 grant_type: 'refresh_token',
-                spotify_refresh_token: self.spotify_refresh_token
-                #client_id: Rails.application.credentials.spotify[:spotify_id]
-                #client_secret: Rails.application.credentials.spotify[:spotify_secret]
+                refresh_token: self.spotify_refresh_token
             }
-            debugger
-            auth_response = RestClient.post(spotify_token_url, body, header)
+            # debugger
+            # auth_response = RestClient.post(spotify_token_url, body, header)
+            auth_response = RestClient::Request.execute(
+                method: :post,
+                url: spotify_token_url, 
+                payload: body, 
+                headers: header
+                )
             auth_params = JSON.parse(auth_response)
             self.update(spotify_access_token: auth_params["access_token"])
 
