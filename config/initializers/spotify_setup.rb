@@ -1,2 +1,2 @@
-#Configures the RSpotify gem with encrypted credentials
+#Configures the RSpotify gem with encrypted credentials from `credentials.yml.enc` created by Rails
 RSpotify::authenticate(Rails.application.credentials.spotify[:spotify_id], Rails.application.credentials.spotify[:spotify_secret])
