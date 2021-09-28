@@ -1,2 +1,2 @@
-#Configures the RSpotify gem with the Figaro shimmed and hidden keys from `./application.yml`
-# RSpotify::authenticate(ENV["spotify_id"], ENV["spotify_secret"])
+#Configures the RSpotify gem with encrypted credentials
+# RSpotify::authenticate(Rails.application.credentials.spotify[:spotify_id], Rails.application.credentials.spotify["spotify_secret"])
