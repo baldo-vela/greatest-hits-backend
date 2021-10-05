@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   #Auth Related Routes
   namespace :api do
     namespace :v1 do
-      get '/login', to: "auth#spotify_request"
+      post '/login', to: "auth#spotify_request"
       get '/auth', to: "auth#show"
       get '/user', to: "users#create"
       patch '/user', to: "users#update"
