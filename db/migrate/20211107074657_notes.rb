@@ -1,10 +1,10 @@
 class Notes < ActiveRecord::Migration[6.1]
   def change
     create_table :notes do |t|
-      t.integer :user_id
-      t.integer :playlist_id
+      t.string :user_name
+      t.belongs_to :playlist, null: false, foreign_key: true
       t.string :playlist_spotify_id
-      t.text :body
+      t.text :content
     
       t.timestamps
     end
