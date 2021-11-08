@@ -43,7 +43,7 @@ class Api::V1::NotesController < ApplicationController
     #DELETE /note/:id
     def destroy
         if @note.destroy
-            render json: {"Successfully Deleted", note: @note}
+            render json: {message: "Successfully Deleted", note: @note}
         else
             render json: {message: "Failed to Delete", note: @note}
         end
@@ -57,6 +57,7 @@ class Api::V1::NotesController < ApplicationController
         end
 
         def note_params
-            params.require(:user).permit(:)
+            params.require(:note).permit(:content, :username, :playlist_id)
+        end
 
 end
