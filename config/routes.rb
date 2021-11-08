@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
   namespace :api do
     namespace :v1 do
-      resources :game_logs
+      resources :notes
     end 
   end
   
