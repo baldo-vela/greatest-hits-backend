@@ -1,4 +1,5 @@
 class Api::V1::PlaylistsController < ApplicationController
+    #Get /playlist
     def index
         @playlists = Playlist.all
 
@@ -7,6 +8,7 @@ class Api::V1::PlaylistsController < ApplicationController
         }
     end
 
+    #GET playlist/:id
     def show
         @playlist = Playlist.find_by(spotify_id: params[:spotify_id])
         list_of_notes = @playlist.Notes
@@ -17,14 +19,19 @@ class Api::V1::PlaylistsController < ApplicationController
         end
 
     end
-
+    #POST /playlist/:id
     def create
-        @playlist = Playlist.build(id: playlist_params[:spotify_id])
+        @playlist = Playlist.new(spotify_id: params[:spotify_id])
+        if @playlist.save
+            render json: @playlist, {status: 202, location: @playlist}
+        else 
+            render json: @playlist.errors, status: :unprocessable_entity
+        end
     end
 
 
     private
     def playlist_params
-        params.require(:)
+        params.require(:spotify_id)
     end
 end
