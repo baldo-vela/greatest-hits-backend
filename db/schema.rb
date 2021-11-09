@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_014111) do
+ActiveRecord::Schema.define(version: 2021_11_08_150030) do
+
+  create_table "notes", force: :cascade do |t|
+    t.string "username"
+    t.integer "playlist_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["playlist_id"], name: "index_notes_on_playlist_id"
+  end
+
+  create_table "playlists", force: :cascade do |t|
+    t.string "spotify_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -27,4 +42,5 @@ ActiveRecord::Schema.define(version: 2021_07_16_014111) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "notes", "playlists"
 end
