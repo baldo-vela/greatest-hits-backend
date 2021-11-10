@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2021_11_08_150030) do
 
   create_table "notes", force: :cascade do |t|
-    t.string "username"
+    t.string "user_spotify_id"
     t.integer "playlist_id", null: false
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
