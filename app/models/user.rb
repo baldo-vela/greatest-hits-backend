@@ -17,9 +17,12 @@ require 'rest-client'
 =end 
 
 class User < ApplicationRecord
-    has_many :playlists
-    has_many :tracks, through: :playlists
+    #Note, temporarily deprecating this model.
+    # No longer need to cache the user object from Spotify
+    #has_many :playlists
+    #has_many :tracks, through: :playlists
 
+=begin 
     def access_token_expired?
         (Time.now - self.updated_at) > 2.hours
     end
@@ -48,7 +51,8 @@ class User < ApplicationRecord
             auth_params = JSON.parse(auth_response)
             self.update(spotify_access_token: auth_params["access_token"])
 
-        end
+        end 
+=end
     end
 
 
