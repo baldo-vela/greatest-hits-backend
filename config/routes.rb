@@ -4,23 +4,12 @@ Rails.application.routes.draw do
   #Model Related Routes
   namespace :api do
     namespace :v1 do
-      resources :tracks
-    end
-  end
-
-  namespace :api do
-    namespace :v1 do
-      resources :users
-    end
-  end
-  namespace :api do
-    namespace :v1 do
-      resources :playlists
-    end
-  end
-  namespace :api do
-    namespace :v1 do
       resources :notes
+      resources :playlists do
+        resources :notes #Leaving All resources open here for now
+      end
+      resources :tracks
+      resources :users
     end 
   end
   

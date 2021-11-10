@@ -1,4 +1,5 @@
 class Api::V1::NotesController < ApplicationController
+    before_action :note_params
     # ALL the Notes in system
     # will probably not ever need this
     def index
@@ -15,15 +16,14 @@ class Api::V1::NotesController < ApplicationController
     # POST note
     # For now only note creation will instance a playlist
     def create
-        @playlist = Playlist.find_by_id(note_params[:spotify_id])
-        @note = @playlist.notes.build(note_params)
+        @playlist = Playlist.find_by(note_params[:spotify_id])
+        @note = @playlist.notes.build(user_spotify_id: note_params[:user_spotify_id], content: note_params[:content])
 
         if @note.save
             render json: {
                 status: 201,
                 store: @note
             }, status: :created, location: api_v1_note_path(@note)
-            Playlist.create(spotify_id: note_params[:spotify_id])
         else
             render json: {
                 status: 422,
@@ -59,7 +59,7 @@ class Api::V1::NotesController < ApplicationController
         end
 
         def note_params
-            params.require(:note).permit(:content, :username, :playlist_id)
+            params.require(:note).permit(:id, :content, :user_spotify_id, :playlist_id)
         end
 
 end

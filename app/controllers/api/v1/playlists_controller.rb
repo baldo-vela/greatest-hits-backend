@@ -10,8 +10,8 @@ class Api::V1::PlaylistsController < ApplicationController
 
     #GET playlist/:id
     def show
-        @playlist = Playlist.find_by(spotify_id: params[:spotify_id])
-        list_of_notes = @playlist.Notes
+        @playlist = Playlist.find_or_create_by(spotify_id: params[:spotify_id])
+        @notes = @playlist.notes
         if @playlist
             render json: @playlist, include: :notes
         else
@@ -23,7 +23,7 @@ class Api::V1::PlaylistsController < ApplicationController
     def create
         @playlist = Playlist.new(spotify_id: params[:spotify_id])
         if @playlist.save
-            render json: @playlist, {status: 202, location: @playlist}
+            render json: @playlist, status: 202, location: @playlist
         else 
             render json: @playlist.errors, status: :unprocessable_entity
         end
