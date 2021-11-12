@@ -1,5 +1,5 @@
 class Api::V1::NotesController < ApplicationController
-    before_action :note_params
+    #before_action :note_params
     # ALL the Notes in system
     # will probably not ever need this
     def index

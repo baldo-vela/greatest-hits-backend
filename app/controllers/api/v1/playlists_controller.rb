@@ -1,18 +1,15 @@
 class Api::V1::PlaylistsController < ApplicationController
+    before_action :set_playlist
     #Get /playlist
     def index
         @playlists = Playlist.all
-
-        render json: @playlists, include: {
-            notes: {}
-        }
+        render json: @playlists
     end
 
     #GET playlist/:id
     def show
-        @playlist = Playlist.find_or_create_by(spotify_id: params[:spotify_id])
-        @notes = @playlist.notes
         if @playlist
+            @notes = @playlist.notes
             render json: @playlist, include: :notes
         else
             render json: {error: 'Playlist Not Found'}
@@ -31,6 +28,10 @@ class Api::V1::PlaylistsController < ApplicationController
 
 
     private
+    def set_playlist
+        @playlist = Playlist.find_by(spotify_id: params[:spotify_id])
+    end
+
     def playlist_params
         params.require(:spotify_id)
     end
