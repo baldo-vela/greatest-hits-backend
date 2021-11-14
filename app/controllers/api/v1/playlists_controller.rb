@@ -2,16 +2,28 @@ class Api::V1::PlaylistsController < ApplicationController
     before_action :set_playlist
     #Get /playlist
     def index
-        @playlists = Playlist.all
-        render json: @playlists
+        @playlists = Playlist.all.includes(:notes)
+        render json: {
+            data: ActiveModelSerializers::SerializableResource.new(@playlists, each_serializer: PlaylistSerializer),
+            message: ["Playlists retrieved successfully"],
+            status: 200,
+            type: "Success"
+        }
+
     end
 
     #GET playlist/:id
     def show
         if @playlist
             @notes = @playlist.notes
-            render json: @playlist, include: :notes
+            render json: {
+                data: ActiveModelSerializers::SerializableResource.new(@playlist, serializer: PlaylistSerializer),
+                message: ['Playlist fetched successfully'],
+                status: 200,
+                type: 'Success'
+              }
         else
+            # TODO: improve error handling
             render json: {error: 'Playlist Not Found'}
         end
 
