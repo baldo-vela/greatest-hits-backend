@@ -47,10 +47,11 @@ class Api::V1::PlaylistsController < ApplicationController
 
     private
     def set_playlist
-        @playlist = Playlist.find_by(spotify_id: params[:spotify_id])
+        @playlist = Playlist.find_by(params[:spotify_id])
     end
 
     def playlist_params
+        #Note: the incoming json is refered to with the :playlist symbol key, and it's subkeys are refered to with the :playlist_params symbol key
         params.require(:playlist).permit(:spotify_id)
     end
 end
