@@ -1,5 +1,7 @@
 class Api::V1::PlaylistsController < ApplicationController
-    before_action :set_playlist
+    # Sets the current instance of playlist object in controller
+    before_action :set_playlist, only: [:show, :update, :destroy]
+    
     #Get /playlist
     def index
         @playlists = Playlist.all.includes(:notes)
@@ -24,15 +26,19 @@ class Api::V1::PlaylistsController < ApplicationController
               }
         else
             # TODO: improve error handling
-            render json: {error: 'Playlist Not Found'}
+            render json: {
+                error: 'Playlist Not Found',
+                status: 404,
+                type: 'Error'
+            }
         end
 
     end
     #POST /playlist/:id
     def create
-        @playlist = Playlist.new(spotify_id: params[:spotify_id])
+        @playlist = Playlist.new(playlist_params)
         if @playlist.save
-            render json: @playlist, status: 202, location: @playlist
+            render json: @playlist, status: 202, type: 'Success'
         else 
             render json: @playlist.errors, status: :unprocessable_entity
         end
@@ -45,6 +51,6 @@ class Api::V1::PlaylistsController < ApplicationController
     end
 
     def playlist_params
-        params.require(:spotify_id)
+        params.require(:playlist).permit(:spotify_id)
     end
 end
